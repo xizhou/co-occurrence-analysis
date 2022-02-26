@@ -7,7 +7,7 @@ It is a probabilistic model based on the Hypergeometric distribution  for detect
 ## Authors
 
 [周晓北] (Zhou Xiaobei)  
-[周淼]  (Zhou Miao)
+[周淼]  (Zhou Miao)  
 [黄德生] (Huang Desheng)    
 [崔雷] (Cui Lei)  
 
@@ -23,12 +23,12 @@ devtools::install_github("xizhou/pubMR")
 
 The detailed methods are introduced in our paper.
 
-## Analogue simulation 
+## parametric simulation 
 We set up a simulation to reflect the reality of MeSH term co-occurrence data and we simulate different variables. Detailed information are elaborated in our article.
 The code is following to realize this process:
 
 ```r
-dir <- "/your/path/co-occurrence-analysis"
+dir <- "~/co-occurrence-analysis/code"
 setwd(dir)
 source("./code.R")
 set.seed(100)
@@ -54,9 +54,12 @@ The function "simu()" is in "code.R".
 
 - We calculated type I and II errors to evaluate the performance of our model:
 
-
-
-"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/simulation%20result.png)"
+```r
+res1 <- rbind(r200_01,r500_01,r1000_01,r2000_01)
+res1 <- cbind(c(200,500,1000,2000),res1)
+res2 <- rbind(r200_02,r500_02,r1000_02,r2000_02)
+res <- cbind(res1,res2)
+```
 
 
 ## Real data application

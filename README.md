@@ -61,6 +61,12 @@ res2 <- rbind(r200_02,r500_02,r1000_02,r2000_02)
 res <- cbind(res1,res2)
 ```
 
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+
 
 ## Real data application
 We chose a bibliometric study about pelvic organ prolapse (POP) as our real data application to illustrate how the probabilistic model can be used for MeSH word co-occurrence analysis and compared our new result with  the original one.

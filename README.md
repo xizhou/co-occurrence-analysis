@@ -59,13 +59,12 @@ res1 <- rbind(r200_01,r500_01,r1000_01,r2000_01)
 res1 <- cbind(c(200,500,1000,2000),res1)
 res2 <- rbind(r200_02,r500_02,r1000_02,r2000_02)
 res <- cbind(res1,res2)
+rownames(res) <- NULL
+colnames(res) <- c("nc","Type I error","Type II error","Type I error","Type II error")
 ```
+The result is shown in Table 1 in the manuscript.
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
+"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/simulation result.png)" 
 
 
 ## Real data application

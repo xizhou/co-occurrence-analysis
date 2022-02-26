@@ -64,7 +64,7 @@ colnames(res) <- c("nc","Type I error","Type II error","Type I error","Type II e
 ```
 The result is shown in Table 1 in the manuscript.
 
-"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/simulation result.png)" 
+"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/simulation%20result.png)"
 
 
 ## Real data application

@@ -304,7 +304,7 @@ ext.line.lty = "dashed",
 alpha=0.7,
 euler.d=T)
 png(filename="venn.png",width=550,height=300)
-grid.draw(venn.plot);
+grid.draw(fig3.plot);
 dev.off()
 ```
 
@@ -325,7 +325,8 @@ source("./code/code.R")
 library(pubMR)
 library(data.table)
 library(tidyr)
-obj <- txtList(input="./date/genome.xml",inputType="xml")
+library(corrplot)
+obj <- txtList(input="./data/genome.xml",inputType="xml")
 obj1=data.table(PMID=obj@PMID,MS=obj@MH)
 MS <- obj1[,MS]
 idx <- sapply(MS,is.null)
@@ -340,9 +341,8 @@ diag(v1) <- NA
 p=hyp(v,length(obj@PMID))
 diag(p) <- 1
 s <- 1-p
-library(corrplot)
 
-png("corplot_threshold.png",w=4000,h=4000)
+png("fig4.png",w=4000,h=4000)
 library(igraph)
 par(mfrow=c(2,2), mar=c(3,5,5,4),oma=c(3,3,3,3))
 g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)

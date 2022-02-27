@@ -274,7 +274,7 @@ The result is presented in Figure 2 in the manucript.
 ![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig2.png)
 
 
-**Comparison of results**
+**Comparison**
 
 We compare our results of our method with the results of original method. Then, we visualize the results of comparison.
 
@@ -311,7 +311,7 @@ dev.off()
 We can get the result (Figure 3):
 ![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig3.png)
 
-### Dimensionality reduction tasks 
+**Dimensionality reduction task** 
 
 ```r
 dir <- "~/co-occurrence-analysis"

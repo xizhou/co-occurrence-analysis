@@ -62,7 +62,7 @@ res <- cbind(res1,res2)
 ```
 The result is shown in Table 1 in the manuscript.
 
-"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/simulation%20result.png)"
+"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/table1.png)"
 
 ## Nonparametric simulation 
 
@@ -142,6 +142,7 @@ s3 <- cosine(s3)
 diag(s3) <- 0
 
 library(igraph)
+png("fig5.png",w=4000,h=4200)
 par(mfrow=c(2,2), mar=c(3,5,5,4),oma=c(3,3,3,3))
 set.seed(100)
 g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
@@ -191,8 +192,10 @@ V(g)$color[grep("word",V(g)$name)] <- "red"
 plot(g,vertex.size=2.5,vertex.label.cex=3,main="d-method")
 title("d-method (with noise)", cex.main=7)
 mtext("(d)", side=3, padj=0,adj=0,cex=8)
+dev.off()
 ```
-
+The result is shown in Figure5 in the manuscript.
+"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig5.png)"
 
 ## Real data application
 We chose a bibliometric study about pelvic organ prolapse (POP) as our real data application to illustrate how the probabilistic model can be used for MeSH word co-occurrence analysis and compared our new result with  the original one.

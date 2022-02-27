@@ -309,9 +309,94 @@ dev.off()
 ```
 
 We can get the result (Figure 3):
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/venn.png)
 
+```r
+dir <- "~/co-occurrence-analysis"
+setwd(dir)
+source("./code/code.R")
+#m <- '"Genome Biol"[Journal]("2001/01/01"[PDAT]:"2020/01/01"[PDAT])'
+#library(pubMR)
+#library(XML)
+#library(data.table)
+#obj1 <- txtList(input=m,outputType='xml')
+#saveXML(obj1,file="genome.xml")
 
-"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/venn.png)"
+library(pubMR)
+library(data.table)
+library(tidyr)
+obj <- txtList(input="./date/genome.xml",inputType="xml")
+obj1=data.table(PMID=obj@PMID,MS=obj@MH)
+MS <- obj1[,MS]
+idx <- sapply(MS,is.null)
+obj1 <- obj1[!idx,]
+obj1 = obj1 %>% unnest(MS) %>%as.data.table
+obj1[,N:=.N,by=MS]
+obj1 <- obj1[N>10,]
+v <- table(obj1[,c("MS","PMID")])
+v <- crossprod(t(v))
+v1 <- v
+diag(v1) <- NA
+p=hyp(v,length(obj@PMID))
+diag(p) <- 1
+s <- 1-p
+library(corrplot)
 
+png("corplot_threshold.png",w=4000,h=4000)
+library(igraph)
+par(mfrow=c(2,2), mar=c(3,5,5,4),oma=c(3,3,3,3))
+g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+#g <- g[order(g[,3],decreasing=T),]
+#g <- g[1:100,]
+g <- g[g[,3]>0.9,]
+co <- reshape2:::dcast(data=g,to~from)
+rownames(co) <- co[,1]
+co <- co[,-1]
+co[is.na(co)] <- 0
+co <- as.matrix(co)
+Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.lim=c(0.95,1),cl.length=5,is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-14,cl.pos="n",tl.pos="n")
+mtext("(a)", side=3, padj=-0.3,adj=-0.01,cex=8)
 
+g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+#g <- g[order(g[,3],decreasing=T),]
+#g <- g[1:100,]
+g <- g[g[,3]>0.95,]
+co <- reshape2:::dcast(data=g,to~from)
+rownames(co) <- co[,1]
+co <- co[,-1]
+co[is.na(co)] <- 0
+co <- as.matrix(co)
+Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.lim=c(0.95,1),cl.length=5,is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-14,cl.pos="n",tl.pos="n")
+mtext("(b)", side=3, padj=-0.3,adj=-0.01,cex=8)
 
+g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+#g <- g[order(g[,3],decreasing=T),]
+#g <- g[1:100,]
+g <- g[g[,3]>0.99,]
+co <- reshape2:::dcast(data=g,to~from)
+rownames(co) <- co[,1]
+co <- co[,-1]
+co[is.na(co)] <- 0
+co <- as.matrix(co)
+s1 <- co
+Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.lim=c(0.95,1),cl.length=5,is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-14,cl.pos="n",tl.pos="n")
+mtext("(c)", side=3, padj=-0.3,adj=-0.01,cex=8)
+
+g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+#g <- g[order(g[,3],decreasing=T),]
+#g <- g[1:100,]
+g <- g[g[,3]==1,]
+co <- reshape2:::dcast(data=g,to~from)
+rownames(co) <- co[,1]
+co <- co[,-1]
+co[is.na(co)] <- 0
+co <- as.matrix(co)
+s1 <- co
+Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.lim=c(0.95,1),cl.length=5,is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-14)
+mtext("(d)", side=3, padj=-0.3,adj=-0.01,cex=8)
+dev.off()
+```

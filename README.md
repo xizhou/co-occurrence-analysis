@@ -62,7 +62,7 @@ res <- cbind(res1,res2)
 ```
 The result is shown in Table 1 in the manuscript.
 
-"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/table1.png)"
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/table1.png)
 
 ## Nonparametric simulation 
 

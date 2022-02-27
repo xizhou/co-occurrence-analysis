@@ -23,7 +23,7 @@ devtools::install_github("xizhou/pubMR")
 
 The detailed methods are introduced in our paper.
 
-## parametric simulation 
+## Parametric simulation 
 We set up a simulation to reflect the reality of MeSH term co-occurrence data and we simulate different variables. Detailed information are elaborated in our article.
 The code is following to realize this process:
 
@@ -102,6 +102,95 @@ p=hyp(v,length(obj@PMID))
 diag(p) <- 1
 p[is.na(p)] <- 0
 s <- 1-p
+
+cosine <- function(x)
+{
+   x <- as.matrix(x)
+   sim <- x / sqrt(rowSums(x*x))
+   sim <- sim %*% t(sim)
+   sim
+}
+
+n <- obj1[,length(unique(PMID))]
+tt <- (1+sqrt(1+8*n))/2
+id <- diag(v)<tt
+s1 <- v
+s1 <- cosine(s1)
+diag(s1) <- 0
+
+n <- 100
+v1 <- matrix(0,nrow=n,nc=nc)
+for( i in seq(nrow(v1)))
+{
+   id <-sample(nc,500)
+   v1[i,id] <- 1
+}
+rownames(v1) <- paste0("word_",seq(n))
+v1 <- rbind(v0,v1)
+
+
+v1 <- crossprod(t(v1))
+p1=hyp(v1,length(obj@PMID))
+diag(p1) <- 1
+s2 <- 1-p1
+
+n <- obj1[,length(unique(PMID))]
+tt <- (1+sqrt(1+8*n))/2
+id <- diag(v1)<tt
+s3 <- v1
+s3 <- cosine(s3)
+diag(s3) <- 0
+
+library(igraph)
+par(mfrow=c(2,2), mar=c(3,5,5,4),oma=c(3,3,3,3))
+set.seed(100)
+g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+g <- g[order(g[,3],decreasing=T),]
+g <- g[1:100,]
+g <- graph_from_data_frame(g)
+E(g)$color <- "blue"
+V(g)$color <- "black"
+V(g)$color[grep("word",V(g)$name)] <- "red"
+plot(g,vertex.size=2.5,vertex.label.cex=3)
+title("h-test (without noise)",cex.main=7)
+mtext("(a)", side=3, padj=0,adj=0,cex=8)
+set.seed(100)
+g <- graph.adjacency(s1, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+g <- g[order(g[,3],decreasing=T),]
+g <- g[1:100,]
+g <- graph_from_data_frame(g)
+E(g)$color <- "blue"
+V(g)$color <- "black"
+V(g)$color[grep("word",V(g)$name)] <- "red"
+plot(g,vertex.size=2.5,vertex.label.cex=3,main="d-method")
+title("d-method (without noise)", cex.main=7)
+mtext("(b)", side=3, padj=0,adj=0,cex=8)
+set.seed(100)
+g <- graph.adjacency(s2, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+g <- g[order(g[,3],decreasing=T),]
+g <- g[1:100,]
+g <- graph_from_data_frame(g)
+E(g)$color <- "blue"
+V(g)$color <- "black"
+V(g)$color[grep("word",V(g)$name)] <- "red"
+plot(g,vertex.size=2.5,vertex.label.cex=3,main="d-method")
+title("h-test (with noise)", cex.main=7)
+mtext("(c)", side=3, padj=0,adj=0,cex=8)
+set.seed(100)
+g <- graph.adjacency(s3, mode = "undirected", weighted =T, diag = F)
+g <- as_data_frame(g)
+g <- g[order(g[,3],decreasing=T),]
+g <- g[1:100,]
+g <- graph_from_data_frame(g)
+E(g)$color <- "blue"
+V(g)$color <- "black"
+V(g)$color[grep("word",V(g)$name)] <- "red"
+plot(g,vertex.size=2.5,vertex.label.cex=3,main="d-method")
+title("d-method (with noise)", cex.main=7)
+mtext("(d)", side=3, padj=0,adj=0,cex=8)
 ```
 
 

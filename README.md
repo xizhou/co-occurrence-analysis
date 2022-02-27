@@ -197,7 +197,7 @@ dev.off()
 The result is shown in Figure5 in the manuscript.
 ![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig5.png)
 
-## Real data application
+## Applications
 We chose a bibliometric study about pelvic organ prolapse (POP) as our real data application to illustrate how the probabilistic model can be used for MeSH word co-occurrence analysis and compared our new result with  the original one.
 
 ### Visualizing the result 
@@ -248,7 +248,7 @@ ALL function are defined in the file "code.R".  The result in form of a high dim
 
 
 **Network of MeSH terms**
-- Then, we built a network structure of MeSH terms (0 < pval < 0.05) of POP dataset  to explore the relationship among these MeSH terms.
+- Then, we built a network structure of MeSH terms (0 < pval < 0.01) of POP dataset  to explore the relationship among these MeSH terms.
 
 The code are following:
 
@@ -256,16 +256,21 @@ The code are following:
 png("fig2.png",w=2000,h=2000)
 set.seed(100)
 g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
-E(g)$width <- as.numeric(cut(E(g)$weight,c(0,0.95,0.99,1,2),right=FALSE))
-E(g)$width[E(g)$width==1] <- 0.75
-E(g)$width[E(g)$width==2] <- 1.5
-E(g)$color <- ifelse(E(g)$width==3,"blue","gray")
-plot(g,vertex.size=4,vertex.label.cex=2)
+g <- as_data_frame(g)
+g <- g[g[,3]>0.99,]
+f <- unique(c(g[,1],g[,2]))
+write.csv(f,file="g.csv")
+g <- graph_from_data_frame(g,directed=F)
+E(g)$width <- 1
+E(g)$width[E(g)$weight==1] <- 2.5
+E(g)$color <- "blue"
+V(g)$color <- "black"
+plot(g,vertex.size=2.5,vertex.label.cex=2)
 dev.off()
 ```
 
 
-"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/fig2.png)"
+"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig2.png)"
 
 
 **Comparison of results**

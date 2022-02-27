@@ -309,7 +309,7 @@ dev.off()
 ```
 
 We can get the result (Figure 3):
-![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/venn.png)
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig3.png)
 
 ```r
 dir <- "~/co-occurrence-analysis"
@@ -400,3 +400,4 @@ Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5
 mtext("(d)", side=3, padj=-0.3,adj=-0.01,cex=8)
 dev.off()
 ```
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig4.png)

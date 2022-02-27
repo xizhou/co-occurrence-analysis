@@ -252,7 +252,7 @@ dev.off()
 ALL function are defined in the file "code.R".
 
 
-"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/fig1.png)"
+![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/fig1.png)
 
 
 **Network of MeSH terms**

@@ -195,7 +195,7 @@ mtext("(d)", side=3, padj=0,adj=0,cex=8)
 dev.off()
 ```
 The result is shown in Figure5 in the manuscript.
-"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig5.png)"
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig5.png)
 
 ## Real data application
 We chose a bibliometric study about pelvic organ prolapse (POP) as our real data application to illustrate how the probabilistic model can be used for MeSH word co-occurrence analysis and compared our new result with  the original one.

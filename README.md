@@ -64,6 +64,32 @@ The result is shown in Table 1 in the manuscript.
 
 "![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/simulation%20result.png)"
 
+## nonparametric simulation 
+
+```r
+dir <- "~/co-occurrence-analysis/code"
+setwd(dir)
+source("./code.R")
+library(pubMR)
+library(data.table)
+library(tidyr)
+obj <- txtList(input="./data/genome.xml",inputType="xml")
+obj1=data.table(PMID=obj@PMID,MS=obj@MH)
+MS <- obj1[,MS]
+idx <- sapply(MS,is.null)
+obj1 <- obj1[!idx,]
+obj1 = obj1 %>% unnest(MS) %>%as.data.table
+obj1[,N:=.N,by=MS]
+obj1 <- obj1[N>50,]
+v0 <- v <- table(obj1[,c("MS","PMID")])
+nc <- ncol(v)
+v <- crossprod(t(v))
+p=hyp(v,length(obj@PMID))
+diag(p) <- 1
+pr[is.na(pr)] <- 0
+s <- 1-pr
+```
+
 
 ## Real data application
 We chose a bibliometric study about pelvic organ prolapse (POP) as our real data application to illustrate how the probabilistic model can be used for MeSH word co-occurrence analysis and compared our new result with  the original one.

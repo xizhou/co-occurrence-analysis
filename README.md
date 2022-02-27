@@ -194,7 +194,7 @@ title("d-method (with noise)", cex.main=7)
 mtext("(d)", side=3, padj=0,adj=0,cex=8)
 dev.off()
 ```
-The result is shown in Figure5 in the manuscript.
+The result is shown in Figure 5 in the manuscript.
 ![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig5.png)
 
 ## Applications
@@ -269,8 +269,9 @@ plot(g,vertex.size=2.5,vertex.label.cex=2)
 dev.off()
 ```
 
+The result is presented in Figure 2 in the manucript.
 
-"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig2.png)"
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig2.png)
 
 
 **Comparison of results**
@@ -278,13 +279,10 @@ dev.off()
 We compare our results of our method with the results of original method. Then, we visualize the results of comparison.
 
 ```r
-idx <- which(rowSums(p==0,na.rm=TRUE)>0)
-vr <- v1[idx,idx]
-cat(rownames(vr),sep="\n")
-f <- fread("/Users/xizhou/Nutstore\ Files/Nutstore/mydoc/paper_threshold/data/venn.csv")
+library(data.table)
+f <- fread("./data/venn.csv",header=T)
 library(VennDiagram)
 library(scales)
-
 library(VennDiagram)
 venn.plot <- draw.pairwise.venn(
 area1 = length(f[!htest=="",htest]), 
@@ -295,25 +293,25 @@ fill = c("blue", "yellow"),
 lty = "blank",
 cex = 2, 
 cat.cex = 3,
-cat.pos = c(190, 0), 
-cat.dist = c(0.07,0.06), 
+cat.pos = c(230, 10), 
+cat.dist = c(0.07,0.03), 
 cat.just = list(c(0, 0), c(0, 0)),
 ext.pos = 0, 
-ext.dist = -0.05,
-ext.length = 0.85, 
+ext.dist = -0.13,
+ext.length =0, 
 ext.line.lwd = 2,
 ext.line.lty = "dashed",
-alpha=0.3,
+alpha=0.7,
 euler.d=T)
-png(filename="venn.png",width=500,height=300)
+png(filename="venn.png",width=550,height=300)
 grid.draw(venn.plot);
 dev.off()
 ```
 
-We can get the result like this:
+We can get the result (Figure 3):
 
 
-"![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/venn.png)"
+"![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/venn.png)"
 
 
 

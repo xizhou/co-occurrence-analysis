@@ -28,9 +28,9 @@ We set up a simulation to reflect the reality of MeSH term co-occurrence data an
 The code is following to realize this process:
 
 ```r
-dir <- "~/co-occurrence-analysis/code"
+dir <- "~/co-occurrence-analysis"
 setwd(dir)
-source("./code.R")
+source(".code/code.R")
 set.seed(100)
 nt <- 100
 nf <- 200
@@ -65,11 +65,12 @@ The result is shown in Table 1 in the manuscript.
 "![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/simulation%20result.png)"
 
 ## nonparametric simulation 
+Firstly you need unzip genome.xml file in data directory, then run the following Rcode: 
 
 ```r
-dir <- "~/co-occurrence-analysis/code"
+dir <- "~/co-occurrence-analysis"
 setwd(dir)
-source("./code.R")
+source("./code/code.R")
 library(pubMR)
 library(data.table)
 library(tidyr)
@@ -86,8 +87,8 @@ nc <- ncol(v)
 v <- crossprod(t(v))
 p=hyp(v,length(obj@PMID))
 diag(p) <- 1
-pr[is.na(pr)] <- 0
-s <- 1-pr
+p[is.na(p)] <- 0
+s <- 1-p
 ```
 
 

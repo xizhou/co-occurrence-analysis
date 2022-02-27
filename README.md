@@ -204,19 +204,15 @@ We chose a bibliometric study about pelvic organ prolapse (POP) as our real data
 
 **Visualizing p-value matrix**
 
-We get a high dimensional p-value matrix (3192×3192) produced by the model, then we visualized metrics for clearly interpreting this result.
-The visualizing code are following:
+Firstly, you can unzip zuo.xml file in data directory.The code is in the following:
 
 ```r
 library(pubMR)
-library(data.table)
-library(tidyr)
-library(corrplot)
-library(igraph)
-
-dir <- "your/path/Co-occurrence-analysis/data"
+dir <- "~/co-occurrence-analysis"
 setwd(dir)
-obj <- txtList(input="zuo.xml",inputType="xml")
+source("./code/code.R")
+obj <- txtList(input="./data/zuo.xml",inputType="xml")
+#obj <- AB(input="zuo.xml")
 obj1=data.table(PMID=obj@PMID,MS=obj@MAJR)
 MS <- obj1[,MS]
 idx <- sapply(MS,is.null)
@@ -227,32 +223,28 @@ v <- crossprod(t(v))
 v1 <- v
 diag(v1) <- NA
 p=hyp(v,length(obj@PMID))
-diag(p) <- NA
-idx <- which(rowSums(p==0,na.rm=TRUE)>0)
-vr <- v1[idx,idx]
-rownames(vr)
-pr <- p[idx,idx]
-pr[is.na(pr)] <- 0
-s <- 1-pr
-s1 <- s
-diag(s1) <- 0
-pdf("co.pdf",w=10,h=10)
-corrplot(s,diag=F,type="upper",tl.srt=45,tl.col=1,tl.cex=0.5,cl.lim=c(0,1))
-dev.off()
-
+diag(p) <- 1
+#write.csv(p,file="Supplementary_Table_1.csv")
+s <- 1-p
 g <- graph.adjacency(s, mode = "undirected", weighted =T, diag = F)
-E(g)$width <- as.numeric(cut(E(g)$weight,4))
+g <- as_data_frame(g)
+#g <- g[order(g[,3],decreasing=T),]
+#g <- g[1:100,]
+g <- g[g[,3]>0.95,]
+co <- reshape2:::dcast(data=g,to~from)
+rownames(co) <- co[,1]
+co <- co[,-1]
+co[is.na(co)] <- 0
+co <- as.matrix(co)
 
 png("fig1.png",w=2000,h=2000)
-s1 <- s
-s1[s<=0.95] <- 0.95
-corrplot(s1,diag=F,p.mat=1-s,type="upper",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.length=5,cl.lim=c(0.95,1),is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-16)
+Corrplot(co,p.mat=1-co,type="full",method="circle",tl.srt=45,tl.col=1,tl.cex=1.5,cl.length=5,is.corr=FALSE,cl.cex=2,pch.cex=4,pch.col="green",insig="label_sig",sig.level=1e-14)
 dev.off()
+
 ```
-ALL function are defined in the file "code.R".
+ALL function are defined in the file "code.R".  The result in form of a high dimensional p-value matrix (3192×3192) produced by the model is shown in Figure 1 in the manuscript.
 
-
-![Image text](https://raw.githubusercontent.com/Miao-zhou/Co-occurrence-analysis/main/fig1.png)
+![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/fig1.png)
 
 
 **Network of MeSH terms**

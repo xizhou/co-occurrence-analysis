@@ -64,8 +64,21 @@ The result is shown in Table 1 in the manuscript.
 
 "![Image text](https://raw.githubusercontent.com/xizhou/co-occurrence-analysis/main/simulation%20result.png)"
 
-## nonparametric simulation 
-Firstly you need unzip genome.xml file in data directory, then run the following Rcode: 
+## Nonparametric simulation 
+
+Firstly you need download genome.xml file using pubMR:
+```r
+#dir <- "~/co-occurrence-analysis"
+#setwd(dir)
+#m <- '"Genome Biol"[Journal]("2001/01/01"[PDAT]:"2020/01/01"[PDAT])'
+#library(pubMR)
+#library(XML)
+#library(data.table)
+#obj1 <- txtList(input=m,outputType='xml')
+#saveXML(obj1,file=".data/genome.xml")
+```
+
+or else you can unzip genome.xml file in data directory, then run the following Rcode: 
 
 ```r
 dir <- "~/co-occurrence-analysis"
